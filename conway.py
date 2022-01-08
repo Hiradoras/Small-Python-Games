@@ -1,59 +1,57 @@
-import random, time, copy
+import time, random, copy
 
-WIDTH, HEIGHT = 20, 20
-nextCells = []
+
+WIDTH, HEIGHT = 50, 20
+newCells = []
 
 for x in range(WIDTH):
     column = []
     for y in range(HEIGHT):
-        if random.randint(0,1) == 0:
+        if random.randint(0, 1) == 1:
             column.append("#")
         else:
-            column.append(' ')
-    nextCells.append(column)
+            column.append(" ")
+    newCells.append(column)
 
 while True:
-    time.sleep(1)
-    currentCells = copy.deepcopy(nextCells)
+    time.sleep(0.01)
+    currentCells = copy.deepcopy(newCells)
+
     for y in range(HEIGHT):
         for x in range(WIDTH):
             print(currentCells[x][y],end="")
-        print()
-    print("||||||||||||||||||||||||||")
-    print("||||||||||||||||||||||||||")
-    
+        print("")
+    print(("-")*WIDTH)
 
     for x in range(WIDTH):
         for y in range(HEIGHT):
-            leftCord = (x - 1) % WIDTH
-            rightCord = (x + 1) % WIDTH
-            aboveCord = (y - 1) % HEIGHT
-            belowCord = (y + 1) % HEIGHT
+            leftCell  = (x - 1) % WIDTH
+            rightCell = (x + 1) % WIDTH
+            aboveCell = (y - 1) % HEIGHT
+            belowCell = (y + 1) % HEIGHT
 
-            aliveNeighbors = 0
-            if currentCells[leftCord][aboveCord] == "#":
-                aliveNeighbors += 1
-            if currentCells[x][aboveCord] == "#":
-                aliveNeighbors +=1
-            if currentCells[leftCord][belowCord] == "#":
-                aliveNeighbors += 1
-            if currentCells[x][belowCord] == "#":
-                aliveNeighbors +=1
-            if currentCells [leftCord][y] == "#":
-                aliveNeighbors +=1
-            if currentCells [rightCord][y] == "#":
-                aliveNeighbors +=1
-            if currentCells[rightCord][aboveCord] == "#":
-                aliveNeighbors +=1
-            if currentCells[rightCord][aboveCord] == "#":
-                aliveNeighbors +=1
-            
+            aliveCells = 0
 
+            if currentCells[leftCell][aboveCell] == "#":
+                aliveCells += 1
+            if currentCells[leftCell][belowCell] == "#":
+                aliveCells += 1
+            if currentCells[leftCell][y] == "#":
+                aliveCells += 1
+            if currentCells[x][aboveCell] == "#":
+                aliveCells += 1
+            if currentCells[x][belowCell] == "#":
+                aliveCells += 1
+            if currentCells[rightCell][aboveCell] == "#":
+                aliveCells += 1
+            if currentCells[rightCell][belowCell] == "#":
+                aliveCells += 1
+            if currentCells[rightCell][y] == "#":
+                aliveCells += 1
 
-            if currentCells[x][y] == "#" and (aliveNeighbors == 2 or aliveNeighbors == 3):
-                nextCells[x][y] == "#"
-            elif currentCells[x][y] == " " and aliveNeighbors == 3:
-                nextCells[x][y] = "#"
+            if currentCells[x][y] == "#" and (aliveCells ==2 or aliveCells == 3):
+                newCells[x][y] = "#"
+            elif currentCells[x][y] == " " and aliveCells == 3:
+                newCells[x][y] = "#"
             else:
-                nextCells[x][y] = " "
-    
+                newCells[x][y] = " "
